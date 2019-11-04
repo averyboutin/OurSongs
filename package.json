@@ -18,5 +18,11 @@
   "bugs": {
     "url": "https://github.com/averyboutin/OurSongs/issues"
   },
-  "homepage": "https://github.com/averyboutin/OurSongs#readme"
+  "homepage": "https://github.com/averyboutin/OurSongs#readme",
+  "dependencies": {
+    "bootstrap": "^4.3.1",
+    "bootswatch": "^4.3.1",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.16.0"
+  }
 }
