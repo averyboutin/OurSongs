@@ -49,9 +49,20 @@
         <h2>Please enter your username and password.</h2>
         <br>
         <form action="/login" method="POST">
-            <input name="username" type="text" placeholder="Username"/>
-            <input name="password" type="password" placeholder="Password"/>
-            <input type="submit" value="Login"/>
+            <fieldset style="width:25%">
+            <!-- <input name="username" type="text" placeholder="Username" />
+            <input name="password" type="password" placeholder="Password" />
+            <input type="submit" value="Login" /> -->
+                <div class="form-group">
+                    <label for="usernameInput">Username</label>
+                    <input type="text" class="form-control" id="usernameInput" placeholder="Enter username">
+                </div>
+                <div class="form-group">
+                    <label for="passwordInput">Password</label>
+                    <input type="password" class="form-control" id="passwordInput" placeholder="Enter password">
+                </div>
+                <button type="submit" class="btn btn-secondary">Login</button>
+            </fieldset>
         </form>
         <br>
         <h3>Don't have an account? <a href="/signup">Sign up</a>!</h3>

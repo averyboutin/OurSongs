@@ -10,6 +10,7 @@ const crypto = require('crypto');
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname + '/css')));
 app.use(express.urlencoded({ extended: false }));
+
 app.get('/', (req, res) => {
     res.render('index');
 });
@@ -18,6 +19,9 @@ app.get('/login', (req, res) => {
     res.render('login');
 });
 
+app.get('/signup', (req, res) => {
+    res.render('signup');
+});
 
 app.post('/login', async function (req, res) {
     console.log('Login attempted from IP ' + req.ip);
