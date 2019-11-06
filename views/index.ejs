@@ -11,7 +11,7 @@
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="index.html">OurSongs</a>
+        <a class="navbar-brand" href="/">OurSongs</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
             aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -20,10 +20,10 @@
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="/">About</a>
                 </li>
             </ul>
             <ul class="navbar-nav my-1 my-lg-0">
@@ -46,8 +46,13 @@
         <p class="lead">Welcome to OurSongs!</p>
     </div>
 
+
     <div>
-        <h2>Log in or Make an Account!</h2>
+        <% if (!locals.uname) { %>
+        <h2 name="info">Log in or Make an Account!</h2>
+        <% } else { %>
+            <h2 name="info">Welcome back <%= uname %>!</h2>
+        <% } %>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

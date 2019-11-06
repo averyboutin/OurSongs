@@ -41,7 +41,9 @@ app.post('/login', async function (req, res) {
                                 res.send('incorrect login');
                             }
                             else {
-                                res.send('login info good!');
+                                res.render('index', {
+                                    'uname' : req.body.username
+                                });
                             }
                         });
                 }
