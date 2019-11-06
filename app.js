@@ -1,4 +1,4 @@
-const port = 3000;
+const port = 80;
 const path = require('path');
 const sql = require('mssql');
 const express = require('express');
