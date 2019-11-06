@@ -34,19 +34,27 @@
                     <a class="nav-link" href="/signup">Sign up</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
+            <!-- <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+            <form id="search-form" class="form-inline my-2 my-lg-0">
+                <input type="text" id="query" value="" class="form-control mr-sm-2" placeholder="Search..." />
+                <input type="submit" id="search" class="btn btn-secondary my-2 my-sm-0" value="Search" />
             </form>
         </div>
     </nav>
 
-    <div>
+    <div style="margin:20px;">
+        <h2>Please enter your username and password.</h2>
+        <br>
         <form action="/login" method="POST">
             <input name="username" type="text" placeholder="Username"/>
             <input name="password" type="password" placeholder="Password"/>
             <input type="submit" value="Login"/>
         </form>
+        <br>
+        <h3>Don't have an account? <a href="/signup">Sign up</a>!</h3>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
