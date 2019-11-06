@@ -1,5 +1,9 @@
+<<<<<<< HEAD
+const port = 80;
+=======
 const hostname = '127.0.0.1';
 const port = 3000;
+>>>>>>> a60ba623e345d32b7f5a29e4da1f86c766b195b0
 const path = require('path');
 const sql = require('mssql');
 const express = require('express');
