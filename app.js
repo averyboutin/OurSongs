@@ -1,7 +1,7 @@
 // <<<<<<< HEAD
 // const port = 80;
 // =======
-const hostname = '127.0.0.1';
+// const hostname = '127.0.0.1';
 const port = 3000;
 // >>>>>>> a60ba623e345d32b7f5a29e4da1f86c766b195b0
 const path = require('path');
@@ -51,7 +51,7 @@ app.post('/login', async function (req, res) {
                             }
                             else {
                                 res.render('index', {
-                                    'uname' : req.body.username
+                                    'uname': req.body.username
                                 });
                             }
                         });
@@ -63,9 +63,13 @@ app.post('/login', async function (req, res) {
     }
 });
 
-app.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
+app.listen(port, () => {
+    console.log(`Server running on Port:${port}/`);
 });
+
+// app.listen(port, hostname, () => {
+//     console.log(`Server running at http://${hostname}:${port}/`);
+// });
 
 app.use((req, res) => {
     res.status(404).render('404');
