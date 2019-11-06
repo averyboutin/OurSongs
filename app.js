@@ -5,7 +5,7 @@ var app = express();
 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname + '/css')));
-
+app.use(express.urlencoded({extended: false}));
 app.get('/', (req,res)=>{
     res.render('index');
 });
@@ -15,7 +15,7 @@ app.get('/login', (req,res)=>{
 });
 
 
-app.get('/submitlogin', function(req, res){
+app.post('/login', function(req, res){
     var result = req.body.username + ' ' + req.body.password;
     res.send(result + ' sent');
 });
