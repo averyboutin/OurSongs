@@ -34,9 +34,13 @@
                     <a class="nav-link" href="/signup">Sign up</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0">
+            <!-- <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="text" placeholder="Search">
                 <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+            <form id="search-form" class="form-inline my-2 my-lg-0">
+                <input type="text" id="query" value="" class="form-control mr-sm-2" placeholder="Search..." />
+                <input type="submit" id="search" class="btn btn-secondary my-2 my-sm-0" value="Search" />
             </form>
         </div>
     </nav>
@@ -44,16 +48,27 @@
     <div class="jumbotron" style="margin:20px;">
         <h1 class="display-3">OurSongs</h1>
         <p class="lead">Welcome to OurSongs!</p>
+        <hr class="my-4">
+        <p>
+            <% if (!locals.uname) { %>
+            <h2 name="info">Please <a href="/login">login</a> or <a href="/signup">sign up</a>!</h2>
+            <% } else { %>
+            <h2 name="info">Welcome back, <%= uname %>!</h2>
+            <% } %>
+        </p>
+        <!-- <br>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+        </p> -->
     </div>
 
-
-    <div>
+    <!-- <div style="margin:20px;">
         <% if (!locals.uname) { %>
-        <h2 name="info">Log in or Make an Account!</h2>
+        <h2 name="info">Please <a href="/login">login</a> or <a href="/signup">sign up</a>!</h2>
         <% } else { %>
-            <h2 name="info">Welcome back <%= uname %>!</h2>
+            <h2 name="info">Welcome back, <%= uname %>!</h2>
         <% } %>
-    </div>
+    </div> -->
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
