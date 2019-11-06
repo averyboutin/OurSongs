@@ -22,7 +22,11 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "bootswatch": "^4.3.1",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
     "jquery": "^3.4.1",
+    "mssql": "^6.0.0",
+    "nodemon": "^1.19.4",
     "popper.js": "^1.16.0"
   }
 }

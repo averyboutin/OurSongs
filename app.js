@@ -1,28 +1,29 @@
-const http = require('http');
-const fs = require('fs');
-const hostname = '127.0.0.1';
 const port = 3000;
+const path = require('path');
+var express = require('express');
+var app = express();
 
-const server = http.createServer(response);
+app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname + '/css')));
 
-function response(req, res) {
-    let file = "";
-    if (req.url == "/") {
-        file = __dirname + "/index.html";
-    } else {
-        file = __dirname + req.url;
-    }
-
-    fs.readFile(file, function (err, page) {
-        if (err) {
-            res.writeHead(404);
-            return res.end("Page not found!");
-        }
-        res.writeHead(200);
-        res.end(page);
-    });
-}
-
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}/`);
+app.get('/', (req,res)=>{
+    res.render('index');
 });
+
+app.get('/login', (req,res)=>{
+    res.render('login');
+});
+
+
+app.get('/submitlogin', function(req, res){
+    var result = req.body.username + ' ' + req.body.password;
+    res.send(result + ' sent');
+});
+
+app.listen(port, () => {
+    console.log(`Server running on Port:${port}/`);
+});
+
+app.use((req,res) => {
+    res.status(404).render('404');
+})
