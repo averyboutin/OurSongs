@@ -1,3 +1,4 @@
+const hostname = '127.0.0.1';
 const port = 3000;
 const path = require('path');
 const sql = require('mssql');
@@ -54,8 +55,8 @@ app.post('/login', async function (req, res) {
     }
 });
 
-app.listen(port, () => {
-    console.log(`Server running on Port:${port}/`);
+app.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
 });
 
 app.use((req, res) => {
