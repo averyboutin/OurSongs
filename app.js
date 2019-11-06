@@ -19,6 +19,7 @@ app.get('/login', (req, res) => {
 
 
 app.post('/login', async function (req, res) {
+    console.log('Login attempted from IP ' + req.ip);
     try {
         console.log('entered ' + req.body.username + ' and ' + req.body.password);
         const connection = await connPool;
@@ -45,9 +46,7 @@ app.post('/login', async function (req, res) {
                         });
                 }
             });
-
     }
-
     catch (err) {
         res.status(500).send('err' + err.message);
     }
