@@ -29,5 +29,8 @@
     "mssql": "^6.0.0",
     "nodemon": "^1.19.4",
     "popper.js": "^1.16.0"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
   }
 }
