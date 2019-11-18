@@ -1,0 +1,41 @@
+.posts-section {
+  width: 100%;
+
+  .posts-container {
+    box-shadow: 0 0px 15px rgba(0, 0, 0, 0.25);
+  }
+
+  .pageNav {
+    height: 40px;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h3 {
+      width: 30%;
+      margin: 0 60px 0 60px;
+      text-align: center;
+    }
+
+    .btn-secondary {
+      width: 200px;
+      font-weight: 500;
+    }
+
+    .muted {
+      color: rgb(197, 197, 197);
+      border: solid rgb(197, 197, 197) 2px;
+    }
+
+    .muted:hover {
+      background-color: transparent;
+    }
+
+    @media screen and (max-width: 480px) {
+      .btn-secondary {
+        width: 130px;
+      }
+    }
+  }
+}

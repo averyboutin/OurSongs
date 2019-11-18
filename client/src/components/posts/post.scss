@@ -1,0 +1,114 @@
+.post {
+  width: 100%;
+  min-height: 180px;
+
+  border-bottom: solid 1px rgb(211, 211, 211);
+  display: flex;
+
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+  }
+
+  .frame {
+    height: 180px;
+    padding: 10px;
+
+    img {
+      height: 100%;
+      box-shadow: 0 0px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    iframe {
+      min-width: 100%;
+      height: 100%;
+      box-shadow: 0 0px 8px rgba(0, 0, 0, 0.5);
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .frame {
+      height: 100%;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .info {
+    width: 100%;
+    min-height: 180px;
+    padding: 10px 10px;
+    padding-right: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .user-info {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .description {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .bigger {
+      font-size: 1.8rem;
+      width: 70%;
+    }
+
+    .viewComments {
+      font-size: 1rem;
+      margin: 0;
+      color: grey;
+      text-align: left;
+    }
+
+    @media screen and (max-width: 480px) {
+      padding-right: 10px;
+
+      .user-info {
+        flex-direction: column;
+      }
+
+      .bigger {
+        width: 100%;
+        margin-bottom: 5px;
+      }
+    }
+  }
+
+  .meta {
+    display: flex;
+
+    h2 {
+      font-size: 1rem;
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 300;
+    }
+  }
+
+  .buttons {
+    display: flex;
+  }
+
+  @media screen and (max-width: 480px) {
+    .buttons {
+      flex-direction: column;
+    }
+
+    .btn {
+      margin: 5px 0;
+    }
+
+    .btn-danger {
+      width: 100%;
+    }
+  }
+}

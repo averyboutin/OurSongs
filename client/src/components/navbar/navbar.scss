@@ -1,0 +1,53 @@
+.navbar {
+  padding: 30px 0;
+  // border-bottom: black solid 2px;
+  background: white;
+  justify-content: center;
+
+  .container {
+    margin: 0px 0;
+    width: 60%;
+
+    .logo {
+      height: 60px;
+      margin: 10px 0;
+    }
+
+    .btn-secondary {
+      width: 150px;
+      margin-left: 20px;
+    }
+
+    .logged {
+      display: flex;
+    }
+
+    .logged-in {
+      display: flex;
+    }
+
+    .logged-out {
+      display: flex;
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    .container {
+      width: 75%;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+
+      .btn-secondary {
+        width: 120px;
+        margin-left: 0px;
+        margin: 0 10px;
+      }
+    }
+  }
+}
