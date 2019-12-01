@@ -1,0 +1,24 @@
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+
+  .line {
+    height: 5px;
+    width: 100%;
+    background-color: black;
+  }
+
+  p {
+    margin: 0 10px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: black;
+  }
+}
+
+.btn-green {
+  background-color: #1db954;
+  border-color: #1db954;
+  color: white;
+}

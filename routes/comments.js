@@ -6,12 +6,12 @@ router.route("/:postid").get((req, res) => {
   poolPromise
     .then(pool => {
       return pool.request().query(`
-        SELECT CommentID, PostID, CommentDescription, CommentSong, COMMENTS.UserID, UserName 
-        FROM COMMENTS
-          JOIN USERS ON (COMMENTS.UserID = USERS.UserID) 
+        SELECT CommentID, PostID, CommentDescription, CommentSong, CommentDate, UserName, IsInPlaylist
+        FROM COMMENTS 
         WHERE PostID=${req.params.postid}`);
     })
     .then(result => {
+      console.log("comments fetched!");
       res.json(result.recordset);
     })
     .catch(err => {
@@ -36,24 +36,35 @@ router.route("/:id").delete((req, res) => {
 });
 
 router.route("/").post((req, res) => {
-  const comment = {
-    PostID: req.body.PostID,
-    CommentDescription: req.body.CommentDescription,
-    CommentSong: req.body.CommentSong,
-    UserID: req.body.UserID
-  };
-
   poolPromise
     .then(pool => {
       return pool.request().query(
-        `INSERT INTO COMMENTS (PostID, CommentDescription, CommentSong, UserID)
+        `INSERT INTO COMMENTS (PostID, CommentDescription, CommentSong, CommentDate, UserName)
           VALUES
-            (${comment.PostID}, '${comment.CommentDescription}', '${comment.CommentSong}', ${comment.UserID})`
+            (${req.body.PostID}, '${req.body.CommentDescription}', '${req.body.CommentSong}', '${req.body.CommentDate}', '${req.body.UserName}')`
       );
     })
     .then(result => {
       console.log("comment posted!");
-      res.send(comment);
+      res.send(result);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+router.route("/").put((req, res) => {
+  poolPromise
+    .then(pool => {
+      return pool.request().query(
+        `UPDATE COMMENTS
+        SET IsInPlaylist = '${req.body.value}'
+        WHERE CommentID = ${req.body.CommentID}`
+      );
+    })
+    .then(result => {
+      console.log("comment updated!");
+      res.send(result);
     })
     .catch(err => {
       console.log(err);

@@ -1,13 +1,9 @@
 .comment {
   width: 100%;
   min-height: 180px;
-
   border-bottom: solid 1px rgb(211, 211, 211);
   display: flex;
-
-  @media screen and (max-width: 480px) {
-    flex-direction: column;
-  }
+  margin: -1.2px 0;
 
   .frame {
     height: 180px;
@@ -17,21 +13,11 @@
       height: 100%;
       box-shadow: 0 0px 8px rgba(0, 0, 0, 0.5);
     }
-
-    iframe {
-      min-width: 100%;
-      height: 100%;
-      box-shadow: 0 0px 8px rgba(0, 0, 0, 0.5);
-    }
   }
 
   @media screen and (max-width: 480px) {
     .frame {
-      height: 100%;
-
-      img {
-        width: 100%;
-      }
+      height: 100px;
     }
   }
 
@@ -45,20 +31,48 @@
     justify-content: space-between;
 
     .user-info {
-      display: flex;
-      justify-content: space-between;
+      .username-date {
+        float: right;
+        text-align: right;
+
+        p {
+          margin: 0;
+        }
+
+        .date {
+          font-size: 0.85rem;
+          font-weight: 100;
+        }
+      }
+
+      .description {
+        width: 100%;
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 0 0 10px 0;
+      }
     }
 
     @media screen and (max-width: 480px) {
       .user-info {
-        flex-direction: column;
+        display: flex;
+        flex-direction: column-reverse;
+
+        .description {
+          margin-bottom: 3px;
+        }
+
+        .username {
+          text-align: left;
+          font-size: 0.8rem;
+          margin: 0;
+        }
       }
     }
 
     .description {
       font-size: 1.2rem;
       font-weight: 700;
-      margin: 0;
     }
 
     .viewComments {
@@ -71,7 +85,7 @@
 
   .meta {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
 
     h2 {
       font-size: 1rem;
@@ -81,15 +95,15 @@
       font-size: 1rem;
       font-weight: 300;
     }
-
-    .btn-danger {
-      height: 40px;
-      width: 90px;
-    }
   }
 
   .buttons {
     display: flex;
+    margin: 0 -5px;
+
+    .btn {
+      margin: 0 5px;
+    }
   }
 
   @media screen and (max-width: 480px) {
@@ -105,4 +119,8 @@
       width: 100%;
     }
   }
+}
+
+.is-in-playlist {
+  border: solid 1.2px #1db954;
 }

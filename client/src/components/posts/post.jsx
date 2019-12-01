@@ -51,6 +51,16 @@ class Post extends Component {
     this.setState({ displayWidget: !this.state.displayWidget });
   };
 
+  convertDate = date => {
+    if (date) {
+      const dateObject = new Date(date);
+      const dateParts = dateObject.toDateString().split(" ");
+      dateParts[0] += ",";
+      dateParts[2] += ",";
+      return dateParts.join(" ");
+    }
+  };
+
   render() {
     return (
       <div>
@@ -60,6 +70,10 @@ class Post extends Component {
           </div>
           <div className="info">
             <div className="user-info">
+              <div className="username-date">
+                <p className="username">Posted by {this.props.UserName}</p>
+                <p className="date">{this.convertDate(this.props.PostDate)}</p>
+              </div>
               <h2
                 className={
                   this.props.isViewingComments
@@ -69,7 +83,6 @@ class Post extends Component {
               >
                 {this.props.description}
               </h2>
-              <p className="username">Posted by {this.props.UserName}</p>
             </div>
             <div className="meta">
               <div>
@@ -79,8 +92,8 @@ class Post extends Component {
                 </h3>
               </div>
             </div>
-            {!this.props.isViewingComments && (
-              <div className="buttons">
+            <div className="buttons">
+              {!this.props.isViewingComments && (
                 <button
                   className="btn btn-secondary"
                   onClick={() =>
@@ -89,22 +102,34 @@ class Post extends Component {
                       PostID: this.props.postID,
                       PostSong: this.props.song,
                       PostDescription: this.props.description,
-                      pageNumber: this.props.pageNumber
+                      pageNumber: this.props.pageNumber,
+                      PostDate: this.convertDate(this.props.PostDate),
+                      Playlist: this.props.Playlist
                     })
                   }
                 >
                   View Comments ({this.props.numComments})
                 </button>
-                {this.props.UserID === this.props.currentUserID && (
-                  <button
-                    className="btn btn-danger"
-                    onClick={this.handleDelete}
-                  >
-                    DELETE
-                  </button>
-                )}
-              </div>
-            )}
+              )}
+              {this.props.Playlist && (
+                <button
+                  className="btn btn-secondary btn-spotify"
+                  onClick={e => {
+                    window.open(
+                      `http://open.spotify.com/user/thelinmichael/playlist/${this.props.Playlist}`,
+                      "_blank"
+                    );
+                  }}
+                >
+                  Open Spotify Playlist
+                </button>
+              )}
+              {this.props.UserName === this.props.currentUserName && (
+                <button className="btn btn-danger" onClick={this.handleDelete}>
+                  DELETE
+                </button>
+              )}
+            </div>
           </div>
         </div>
         {this.state.displayWidget && (

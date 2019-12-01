@@ -1,3 +1,7 @@
+.tracksong::after {
+  content: "hello";
+}
+
 .postOrCancel {
   display: flex;
   justify-content: space-between;

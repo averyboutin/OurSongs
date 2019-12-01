@@ -23,7 +23,7 @@ router.route("/login").post((req, res) => {
         poolPromise
           .then(pool => {
             return pool.request().query(`
-            SELECT UserID, Username
+            SELECT UserName
             FROM USERS
             WHERE
                 UserName = '${req.body.UserName}'

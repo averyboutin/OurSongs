@@ -12,7 +12,7 @@ class Navbar extends Component {
           <div className="logged">
             {this.props.isLoggedIn ? (
               <div className="logged-in">
-                <h3>{this.props.Username}</h3>
+                <h3>{this.props.UserName}</h3>
                 <button
                   className="btn btn-secondary"
                   onClick={this.props.handleLogOut}

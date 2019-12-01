@@ -5,10 +5,23 @@ const { poolPromise } = require("./db");
 router.route("/").get((req, res) => {
   poolPromise
     .then(pool => {
-      return pool.request().query("SELECT * FROM POSTS ORDER BY PostID DESC");
+      return pool.request().query("SELECT * FROM POSTS ORDER BY PostDate DESC");
     })
     .then(result => {
       res.json(result.recordset);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+});
+
+router.route("/count").get((req, res) => {
+  poolPromise
+    .then(pool => {
+      return pool.request().query("SELECT COUNT(*) AS Count FROM POSTS");
+    })
+    .then(result => {
+      res.json(result.recordset[0]);
     })
     .catch(err => {
       console.log(err);
@@ -36,18 +49,11 @@ router.route("/page/:numPosts/:pageNumber").get((req, res) => {
   poolPromise
     .then(pool => {
       return pool.request().query(`
-        SELECT SUB.PostID, PostDescription, PostSong, SUB.UserID, UserName, COUNT(COMMENTS.PostID) AS numComments
-        FROM COMMENTS
-        RIGHT JOIN (
-          SELECT POSTS.PostID, PostDescription, PostSong, POSTS.UserID, UserName
-          FROM POSTS 
-            JOIN USERS ON (POSTS.UserID = USERS.UserID)
-          ORDER BY PostID DESC
-          OFFSET ${req.params.pageNumber * req.params.numPosts} ROWS
-          FETCH NEXT ${req.params.numPosts} ROWS ONLY
-          ) SUB
-          ON COMMENTS.PostID = SUB.PostID
-        GROUP BY SUB.PostID, PostDescription, PostSong, SUB.UserID, UserName
+        SELECT PostID, PostDescription, PostSong, PostDate, UserName, Playlist, (SELECT COUNT(*) FROM COMMENTS WHERE COMMENTS.PostID = POSTS.PostID) as numComments
+        FROM POSTS 
+        ORDER BY PostDate DESC
+        OFFSET ${req.params.pageNumber * req.params.numPosts} ROWS
+        FETCH NEXT ${req.params.numPosts} ROWS ONLY
             `);
     })
     .then(result => {
@@ -75,23 +81,17 @@ router.route("/:id").delete((req, res) => {
 });
 
 router.route("/").post((req, res) => {
-  const post = {
-    PostDescription: req.body.PostDescription,
-    PostSong: req.body.PostSong,
-    UserID: req.body.UserID
-  };
-
   poolPromise
     .then(pool => {
       return pool.request().query(
-        `INSERT INTO POSTS (PostDescription, PostSong, UserID)
+        `INSERT INTO POSTS (PostDescription, PostSong, PostDate, UserName, Playlist)
           VALUES
-            ('${post.PostDescription}', '${post.PostSong}', ${post.UserID})`
+            ('${req.body.PostDescription}', '${req.body.PostSong}', '${req.body.PostDate}', '${req.body.UserName}', '${req.body.Playlist}')`
       );
     })
     .then(result => {
       console.log("post posted!");
-      res.send(post);
+      res.send(result);
     })
     .catch(err => {
       console.log(err);

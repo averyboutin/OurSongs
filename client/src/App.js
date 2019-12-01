@@ -9,14 +9,28 @@ import LogIn from "./components/users/login";
 import SignUp from "./components/users/signUp";
 import Welcome from "./components/users/welcome";
 
+const hash = window.location.hash
+  .substring(1)
+  .split("&")
+  .reduce(function(initial, item) {
+    if (item) {
+      var parts = item.split("=");
+      initial[parts[0]] = decodeURIComponent(parts[1]);
+    }
+    return initial;
+  }, {});
+
+window.location.hash = "";
+
 class App extends Component {
   constructor() {
     super();
     this.state = {
       token: "",
       isLoggedIn: false,
-      UserID: -1,
-      Username: "",
+      isLoggedInWithSpotify: false,
+      UserName: "",
+      spotifyUserID: "",
       isWelcoming: false,
       isSigningUp: false,
       isLoggingIn: false,
@@ -28,16 +42,43 @@ class App extends Component {
         PostID: -1,
         PostSong: "",
         PostDescription: "",
-        pageNumber: 0
+        pageNumber: 0,
+        PostDate: "",
+        Playlist: ""
       }
     };
   }
 
   componentDidMount() {
-    fetch("/api/token")
-      .then(res => res.json())
-      .then(tokenRes => this.setState({ token: tokenRes.access_token }))
-      .then(this.setState({ isViewingPosts: true }));
+    let _token = hash.access_token;
+    if (_token) {
+      //use spotify implicit grant token
+      this.setState({ token: _token }, () => {
+        fetch("https://api.spotify.com/v1/me", {
+          headers: {
+            Authorization: `Bearer ${this.state.token}`
+          }
+        })
+          .then(res => {
+            return res.json();
+          })
+          .then(result => {
+            console.log(result);
+            this.setState({
+              isLoggedIn: true,
+              isLoggedInWithSpotify: true,
+              UserName: result.display_name,
+              spotifyUserID: result.id
+            });
+          });
+      });
+    } else {
+      //use spotify client creditials flow token
+      fetch("/api/token")
+        .then(res => res.json())
+        .then(result => this.setState({ token: result.access_token }))
+        .then(this.setState({ isViewingPosts: true }));
+    }
   }
 
   handleSignUpOpen = () => {
@@ -59,18 +100,17 @@ class App extends Component {
   };
 
   handleSignUp = UserName => {
-    this.setState({ Username: UserName, isWelcoming: true });
+    this.setState({ UserName: UserName, isWelcoming: true });
     this.handleSignUpClose();
   };
 
   handleWelcomeGoBack = () => {
-    this.setState({ isWelcoming: false, Username: "" }, this.handleLogInOpen());
+    this.setState({ isWelcoming: false, UserName: "" }, this.handleLogInOpen());
   };
 
-  handleLogIn = (UserID, Username) => {
+  handleLogIn = UserName => {
     this.setState({
-      UserID: UserID,
-      Username: Username,
+      UserName: UserName,
       isLoggedIn: true,
       isViewingPosts: true,
       isLoggingIn: false
@@ -78,10 +118,16 @@ class App extends Component {
   };
 
   handleLogOut = () => {
-    this.setState({
-      isLoggedIn: false,
-      UserID: -1
-    });
+    fetch("/api/token")
+      .then(res => res.json())
+      .then(result => this.setState({ token: result.access_token }))
+      .then(
+        this.setState({
+          isLoggedIn: false,
+          UserName: "",
+          isLoggedInWithSpotify: false
+        })
+      );
   };
 
   handleLogInOpen = () => {
@@ -111,7 +157,9 @@ class App extends Component {
         PostID: e.PostID,
         PostSong: e.PostSong,
         PostDescription: e.PostDescription,
-        pageNumber: e.pageNumber
+        pageNumber: e.pageNumber,
+        PostDate: e.PostDate,
+        Playlist: e.Playlist
       }
     });
   };
@@ -129,12 +177,12 @@ class App extends Component {
       <div className="App">
         {this.state.isWelcoming && (
           <Welcome
-            UserName={this.state.Username}
+            UserName={this.state.UserName}
             handleWelcomeGoBack={this.handleWelcomeGoBack}
           />
         )}
         <Navbar
-          Username={this.state.Username}
+          UserName={this.state.UserName}
           isLoggedIn={this.state.isLoggedIn}
           handleSignUpOpen={this.handleSignUpOpen}
           handleLogInOpen={this.handleLogInOpen}
@@ -163,17 +211,22 @@ class App extends Component {
               </button>
               <Post
                 UserName={this.state.commentsData.UserName}
+                currentUserName={this.state.UserName}
                 PostID={this.state.commentsData.PostID}
                 song={this.state.commentsData.PostSong}
                 description={this.state.commentsData.PostDescription}
+                PostDate={this.state.commentsData.PostDate}
+                Playlist={this.state.commentsData.Playlist}
                 token={this.state.token}
                 isViewingComments={this.state.isViewingComments}
               />
               <Comments
                 isLoggedIn={this.state.isLoggedIn}
-                UserID={this.state.UserID}
+                isLoggedInWithSpotify={this.state.isLoggedInWithSpotify}
                 UserName={this.state.commentsData.UserName}
+                currentUserName={this.state.UserName}
                 PostID={this.state.commentsData.PostID}
+                Playlist={this.state.commentsData.Playlist}
                 handleGoBackComments={this.handleGoBackComments}
                 token={this.state.token}
               />
@@ -182,8 +235,9 @@ class App extends Component {
           {this.state.isViewingPosts && (
             <Posts
               isLoggedIn={this.state.isLoggedIn}
-              UserID={this.state.UserID}
-              UserName={this.state.UserName}
+              isLoggedInWithSpotify={this.state.isLoggedInWithSpotify}
+              currentUserName={this.state.UserName}
+              spotifyUserID={this.state.spotifyUserID}
               handleViewComments={this.handleViewComments}
               isViewingComments={this.state.isViewingComments}
               pageNumber={this.state.commentsData.pageNumber}

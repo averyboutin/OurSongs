@@ -51,14 +51,46 @@ class Comment extends Component {
     this.setState({ displayWidget: !this.state.displayWidget });
   };
 
+  convertDate = date => {
+    if (date) {
+      const dateObject = new Date(date);
+      const dateParts = dateObject.toDateString().split(" ");
+      dateParts[0] += ",";
+      dateParts[2] += ",";
+      return dateParts.join(" ");
+    }
+  };
+
+  handleAddOrRemove = () => {
+    this.props.IsInPlaylist
+      ? this.props.removeTrackFromPlaylist(
+          this.props.CommentID,
+          this.props.song
+        )
+      : this.props.addTrackToPlaylist(this.props.CommentID, this.props.song);
+  };
+
   render() {
     return (
       <div>
-        <div className="comment">
+        <div
+          className={
+            this.props.IsInPlaylist ? "comment is-in-playlist" : "comment"
+          }
+        >
           <div className="frame" onClick={this.handleFameClick}>
             <img src={this.state.trackAlbumArtUrl} alt="" />
           </div>
           <div className="info">
+            <div className="user-info">
+              <div className="username-date">
+                <p className="username">Posted by {this.props.UserName}</p>
+                <p className="date">
+                  {this.convertDate(this.props.CommentDate)}
+                </p>
+              </div>
+              <h2 className="description">{this.props.description}</h2>
+            </div>
             <div className="meta">
               <div>
                 <h2>{this.state.trackTitle}</h2>
@@ -66,15 +98,28 @@ class Comment extends Component {
                   {this.state.trackArtist} • {this.state.trackAlbum}
                 </h3>
               </div>
-              {this.props.UserID === this.props.currentUserID && (
-                <button className="btn btn-danger" onClick={this.handleDelete}>
-                  DELETE
-                </button>
-              )}
-            </div>
-            <div className="user-info">
-              <h2 className="description">{this.props.description}</h2>
-              <p className="username">Commented by {this.props.UserName}</p>
+              <div className="buttons">
+                {this.props.currentUserName === this.props.postUserName &&
+                  this.props.isLoggedInWithSpotify &&
+                  this.props.Playlist && (
+                    <button
+                      className="btn btn-secondary btn-spotify"
+                      onClick={() => {
+                        this.handleAddOrRemove();
+                      }}
+                    >
+                      Add or Remove From Playlist
+                    </button>
+                  )}
+                {this.props.UserName === this.props.currentUserName && (
+                  <button
+                    className="btn btn-danger"
+                    onClick={this.handleDelete}
+                  >
+                    DELETE
+                  </button>
+                )}
+              </div>
             </div>
           </div>
         </div>
