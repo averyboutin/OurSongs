@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./comment.scss";
+import moment from "moment";
 
 class Comment extends Component {
   constructor() {
@@ -51,16 +52,6 @@ class Comment extends Component {
     this.setState({ displayWidget: !this.state.displayWidget });
   };
 
-  convertDate = date => {
-    if (date) {
-      const dateObject = new Date(date);
-      const dateParts = dateObject.toDateString().split(" ");
-      dateParts[0] += ",";
-      dateParts[2] += ",";
-      return dateParts.join(" ");
-    }
-  };
-
   handleAddOrRemove = () => {
     this.props.IsInPlaylist
       ? this.props.removeTrackFromPlaylist(
@@ -86,7 +77,7 @@ class Comment extends Component {
               <div className="username-date">
                 <p className="username">Posted by {this.props.UserName}</p>
                 <p className="date">
-                  {this.convertDate(this.props.CommentDate)}
+                  {moment(this.props.CommentDate).format("MMM Do YY, h:mm a")}
                 </p>
               </div>
               <h2 className="description">{this.props.description}</h2>

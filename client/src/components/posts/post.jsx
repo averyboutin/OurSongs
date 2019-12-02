@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./post.scss";
+import moment from "moment";
 
 class Post extends Component {
   constructor() {
@@ -51,16 +52,6 @@ class Post extends Component {
     this.setState({ displayWidget: !this.state.displayWidget });
   };
 
-  convertDate = date => {
-    if (date) {
-      const dateObject = new Date(date);
-      const dateParts = dateObject.toDateString().split(" ");
-      dateParts[0] += ",";
-      dateParts[2] += ",";
-      return dateParts.join(" ");
-    }
-  };
-
   render() {
     return (
       <div>
@@ -72,7 +63,9 @@ class Post extends Component {
             <div className="user-info">
               <div className="username-date">
                 <p className="username">Posted by {this.props.UserName}</p>
-                <p className="date">{this.convertDate(this.props.PostDate)}</p>
+                <p className="date">
+                  {moment(this.props.PostDate).format("MMM Do YY, h:mm a")}
+                </p>
               </div>
               <h2
                 className={
@@ -103,7 +96,7 @@ class Post extends Component {
                       PostSong: this.props.song,
                       PostDescription: this.props.description,
                       pageNumber: this.props.pageNumber,
-                      PostDate: this.convertDate(this.props.PostDate),
+                      PostDate: this.props.PostDate,
                       Playlist: this.props.Playlist
                     })
                   }
@@ -124,11 +117,15 @@ class Post extends Component {
                   Open Spotify Playlist
                 </button>
               )}
-              {this.props.UserName === this.props.currentUserName && (
-                <button className="btn btn-danger" onClick={this.handleDelete}>
-                  DELETE
-                </button>
-              )}
+              {this.props.UserName === this.props.currentUserName &&
+                !this.props.isViewingComments && (
+                  <button
+                    className="btn btn-danger"
+                    onClick={this.handleDelete}
+                  >
+                    DELETE
+                  </button>
+                )}
             </div>
           </div>
         </div>

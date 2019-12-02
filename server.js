@@ -8,12 +8,12 @@ app.use(cors());
 app.use(express.json());
 
 const postsRouter = require("./routes/posts");
-const spotifyTokenRouter = require("./routes/spotifyToken");
+const authorizationRouter = require("./routes/authorization");
 const usersRouter = require("./routes/users");
 const commentsRouter = require("./routes/comments");
 
 app.use("/api/posts", postsRouter);
-app.use("/api/token", spotifyTokenRouter);
+app.use("/api/token", authorizationRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/comments", commentsRouter);
 
