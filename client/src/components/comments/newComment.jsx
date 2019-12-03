@@ -147,7 +147,7 @@ class NewComment extends Component {
     return (
       <div>
         {this.state.isMakingNew ? (
-          <form onSubmit={this.handleSubmit}>
+          <form className="new-comment-form" onSubmit={this.handleSubmit}>
             <div className="form-group">
               <label className="form-text text-muted" htmlFor="CommentSong">
                 Enter Spotify Track ID{" "}

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "./signUp.scss";
 
 class SignUp extends Component {
   constructor() {
@@ -54,71 +55,73 @@ class SignUp extends Component {
     return (
       <div className="log-in">
         <h2>Sign Up</h2>
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label className="form-text text-muted" htmlFor="username">
-              Enter Username
-            </label>
-            <input
-              className={
-                this.state.badUserNameMessage
-                  ? "form-control is-invalid"
-                  : "form-control"
-              }
-              type="text"
-              name="username"
-              placeholder="Username"
-              id="username"
-              value={this.state.username}
-              onChange={e => {
-                this.setState({
-                  username: e.target.value,
-                  badUserNameMessage: ""
-                });
-              }}
-            />
-            <div className="invalid-feedback">
-              {this.state.badUserNameMessage}
+        <div className="sign-up-container">
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <label className="form-text text-muted" htmlFor="username">
+                Enter Username
+              </label>
+              <input
+                className={
+                  this.state.badUserNameMessage
+                    ? "form-control is-invalid"
+                    : "form-control"
+                }
+                type="text"
+                name="username"
+                placeholder="Username"
+                id="username"
+                value={this.state.username}
+                onChange={e => {
+                  this.setState({
+                    username: e.target.value,
+                    badUserNameMessage: ""
+                  });
+                }}
+              />
+              <div className="invalid-feedback">
+                {this.state.badUserNameMessage}
+              </div>
             </div>
-          </div>
-          <div className="form-group">
-            <label className="form-text text-muted" htmlFor="password">
-              Enter Password
-            </label>
-            <input
-              className={
-                this.state.badPassWordMessage
-                  ? "form-control is-invalid"
-                  : "form-control"
-              }
-              type="password"
-              name="password"
-              placeholder="Password"
-              id="password"
-              value={this.state.password}
-              onChange={e => {
-                this.setState({
-                  password: e.target.value,
-                  badPassWordMessage: ""
-                });
-              }}
-            />
-            <div className="invalid-feedback">
-              {this.state.badPassWordMessage}
+            <div className="form-group">
+              <label className="form-text text-muted" htmlFor="password">
+                Enter Password
+              </label>
+              <input
+                className={
+                  this.state.badPassWordMessage
+                    ? "form-control is-invalid"
+                    : "form-control"
+                }
+                type="password"
+                name="password"
+                placeholder="Password"
+                id="password"
+                value={this.state.password}
+                onChange={e => {
+                  this.setState({
+                    password: e.target.value,
+                    badPassWordMessage: ""
+                  });
+                }}
+              />
+              <div className="invalid-feedback">
+                {this.state.badPassWordMessage}
+              </div>
             </div>
-          </div>
 
-          <div className="postOrCancel">
-            <button
-              type="button"
-              className="btn btn-primary"
-              onClick={this.props.handleSignUpClose}
-            >
-              Cancel
-            </button>
-            <input className="btn btn-primary" type="submit" value="Submit" />
-          </div>
-        </form>
+            <div className="postOrCancel">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={this.props.handleSignUpClose}
+              >
+                Cancel
+              </button>
+              <input className="btn btn-primary" type="submit" value="Submit" />
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

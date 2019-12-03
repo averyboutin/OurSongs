@@ -83,95 +83,97 @@ class LogIn extends Component {
     return (
       <div className="log-in">
         <h2>Log In</h2>
-        <div>
-          <button
-            className="btn btn-primary btn-green"
-            onClick={this.handleLogInWithSpotify}
-          >
-            Log In With Spotify
-          </button>
-        </div>
-        <div className="divider">
-          <div className="line"></div>
-          <p>OR</p>
-          <div className="line"></div>
-        </div>
-        <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label className="form-text text-muted" htmlFor="username">
-              Enter Username
-            </label>
-            <input
-              value={this.state.username}
-              onChange={e => {
-                this.setState({
-                  username: e.target.value,
-                  badUserNameMessage: "",
-                  badLogInMessage: ""
-                });
-              }}
-              className={
-                this.state.badUserNameMessage || this.state.badLogInMessage
-                  ? "form-control is-invalid"
-                  : "form-control"
-              }
-              type="text"
-              name="username"
-              placeholder="Username"
-              id="username"
-            />
-            <div className="invalid-feedback">
-              {this.state.badUserNameMessage}
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="form-text text-muted" htmlFor="password">
-              Enter Password
-            </label>
-            <input
-              value={this.state.password}
-              onChange={e => {
-                this.setState({
-                  password: e.target.value,
-                  badPassWordMessage: "",
-                  badLogInMessage: ""
-                });
-              }}
-              className={
-                this.state.badPassWordMessage || this.state.badLogInMessage
-                  ? "form-control is-invalid"
-                  : "form-control"
-              }
-              type="password"
-              name="password"
-              placeholder="Password"
-              id="password"
-            />
-            <div className="invalid-feedback">
-              {this.state.badPassWordMessage}
-            </div>
-          </div>
-          <div className="form-group">
-            <label className="form-text" htmlFor="username">
-              (Users not logged in with spotify will not be able to create
-              spotify playlists)
-            </label>
-            <label className="form-text text-danger" htmlFor="username">
-              {this.state.badLogInMessage}
-            </label>
-          </div>
-
-          <div className="postOrCancel">
+        <div className="log-in-container">
+          <div>
             <button
-              type="button"
-              className="btn btn-primary"
-              onClick={this.props.handleLogInClose}
+              className="btn btn-primary btn-green"
+              onClick={this.handleLogInWithSpotify}
             >
-              Cancel
+              Log In With Spotify
             </button>
-            <input className="btn btn-primary" type="submit" value="Submit" />
           </div>
-        </form>
+          <div className="divider">
+            <div className="line"></div>
+            <p>OR</p>
+            <div className="line"></div>
+          </div>
+          <form onSubmit={this.handleSubmit}>
+            <div className="form-group">
+              <label className="form-text text-muted" htmlFor="username">
+                Enter Username
+              </label>
+              <input
+                value={this.state.username}
+                onChange={e => {
+                  this.setState({
+                    username: e.target.value,
+                    badUserNameMessage: "",
+                    badLogInMessage: ""
+                  });
+                }}
+                className={
+                  this.state.badUserNameMessage || this.state.badLogInMessage
+                    ? "form-control is-invalid"
+                    : "form-control"
+                }
+                type="text"
+                name="username"
+                placeholder="Username"
+                id="username"
+              />
+              <div className="invalid-feedback">
+                {this.state.badUserNameMessage}
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="form-text text-muted" htmlFor="password">
+                Enter Password
+              </label>
+              <input
+                value={this.state.password}
+                onChange={e => {
+                  this.setState({
+                    password: e.target.value,
+                    badPassWordMessage: "",
+                    badLogInMessage: ""
+                  });
+                }}
+                className={
+                  this.state.badPassWordMessage || this.state.badLogInMessage
+                    ? "form-control is-invalid"
+                    : "form-control"
+                }
+                type="password"
+                name="password"
+                placeholder="Password"
+                id="password"
+              />
+              <div className="invalid-feedback">
+                {this.state.badPassWordMessage}
+              </div>
+            </div>
+            <div className="form-group">
+              <label className="form-text" htmlFor="username">
+                (Users not logged in with spotify will not be able to create
+                spotify playlists)
+              </label>
+              <label className="form-text text-danger" htmlFor="username">
+                {this.state.badLogInMessage}
+              </label>
+            </div>
+
+            <div className="postOrCancel">
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={this.props.handleLogInClose}
+              >
+                Cancel
+              </button>
+              <input className="btn btn-primary" type="submit" value="Submit" />
+            </div>
+          </form>
+        </div>
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./post.scss";
 import moment from "moment";
+import * as Vibrant from "node-vibrant";
 
 class Post extends Component {
   constructor() {
@@ -52,12 +53,23 @@ class Post extends Component {
     this.setState({ displayWidget: !this.state.displayWidget });
   };
 
+  handlePostClick = () => {
+    Vibrant.from(this.state.trackAlbumArtUrl)
+      .getPalette()
+      .then(palette => {
+        document.body.style.background = `linear-gradient(-30deg, ${palette.Vibrant.hex}, #ffffff)`;
+      });
+  };
+
   render() {
     return (
-      <div>
+      <div onClick={this.handlePostClick}>
         <div className="post">
           <div className="frame" onClick={this.handleFameClick}>
-            <img src={this.state.trackAlbumArtUrl} alt="" />
+            <img
+              src={this.state.trackAlbumArtUrl}
+              alt={`album art for ${this.state.trackAlbum}`}
+            />
           </div>
           <div className="info">
             <div className="user-info">

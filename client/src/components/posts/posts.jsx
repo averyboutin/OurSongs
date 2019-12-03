@@ -104,7 +104,7 @@ class Posts extends Component {
           <button
             className={
               this.state.pageNumber === 0
-                ? "btn btn-secondary muted"
+                ? "btn btn-secondary btn-muted"
                 : "btn btn-secondary"
             }
             onClick={this.handlePreviousPage}
@@ -118,7 +118,7 @@ class Posts extends Component {
             className={
               this.state.numPosts * (this.state.pageNumber + 1) >=
               this.state.postCount
-                ? "btn btn-secondary muted"
+                ? "btn btn-secondary btn-muted"
                 : "btn btn-secondary"
             }
             onClick={this.handleNextPage}

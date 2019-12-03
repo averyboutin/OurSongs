@@ -1,14 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const { poolPromise } = require("./db");
+const sql = require("mssql");
 
 router.route("/:postid").get((req, res) => {
   poolPromise
     .then(pool => {
-      return pool.request().query(`
-        SELECT CommentID, PostID, CommentDescription, CommentSong, CommentDate, UserName, IsInPlaylist
-        FROM COMMENTS 
-        WHERE PostID=${req.params.postid}`);
+      return pool
+        .request()
+        .input("PostID", sql.Int, req.params.postid)
+        .query("SELECT * FROM COMMENTS WHERE PostID=@PostID");
     })
     .then(result => {
       console.log("comments fetched!");
@@ -24,7 +25,8 @@ router.route("/:id").delete((req, res) => {
     .then(pool => {
       return pool
         .request()
-        .query(`DELETE FROM COMMENTS WHERE CommentID=${req.params.id}`);
+        .input("CommentID", sql.Int, req.params.id)
+        .query("DELETE FROM COMMENTS WHERE CommentID=@CommentID");
     })
     .then(result => {
       console.log("comment deleted!");
@@ -38,14 +40,21 @@ router.route("/:id").delete((req, res) => {
 router.route("/").post((req, res) => {
   poolPromise
     .then(pool => {
-      return pool.request().query(
-        `INSERT INTO COMMENTS (PostID, CommentDescription, CommentSong, CommentDate, UserName)
+      return pool
+        .request()
+        .input("PostID", sql.Int, req.body.PostID)
+        .input("CommentDescription", sql.NVarChar, req.body.CommentDescription)
+        .input("CommentSong", sql.NVarChar, req.body.CommentSong)
+        .input("CommentDate", sql.NVarChar, req.body.CommentDate)
+        .input("UserName", sql.NVarChar, req.body.UserName)
+        .query(
+          `INSERT INTO COMMENTS (PostID, CommentDescription, CommentSong, CommentDate, UserName)
           VALUES
-            (${req.body.PostID}, '${req.body.CommentDescription}', '${req.body.CommentSong}', '${req.body.CommentDate}', '${req.body.UserName}')`
-      );
+            (@PostID, @CommentDescription, @CommentSong, @CommentDate, @UserName)`
+        );
     })
     .then(result => {
-      console.log("comment posted!");
+      console.log(`${req.body.UserName} posted ${req.body.CommentDescription}`);
       res.send(result);
     })
     .catch(err => {

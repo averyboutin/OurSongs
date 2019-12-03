@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { poolPromise } = require("./db");
+const sql = require("mssql");
 
 router.route("/").get((req, res) => {
   poolPromise
@@ -33,7 +34,8 @@ router.route("/:id").get((req, res) => {
     .then(pool => {
       return pool
         .request()
-        .query(`SELECT * FROM POSTS WHERE PostID=${req.params.id}`);
+        .input("PostID", sql.Int, req.params.id)
+        .query("SELECT * FROM POSTS WHERE PostID=@PostID");
     })
     .then(result => {
       if (result.recordset.length < 1)
@@ -69,7 +71,8 @@ router.route("/:id").delete((req, res) => {
     .then(pool => {
       return pool
         .request()
-        .query(`DELETE FROM POSTS WHERE PostID=${req.params.id}`);
+        .input("PostID", sql.Int, req.params.id)
+        .query("DELETE FROM POSTS WHERE PostID=@PostID");
     })
     .then(result => {
       console.log("post deleted!");
@@ -83,14 +86,21 @@ router.route("/:id").delete((req, res) => {
 router.route("/").post((req, res) => {
   poolPromise
     .then(pool => {
-      return pool.request().query(
-        `INSERT INTO POSTS (PostDescription, PostSong, PostDate, UserName, Playlist)
+      return pool
+        .request()
+        .input("PostDescription", sql.NVarChar, req.body.PostDescription)
+        .input("PostSong", sql.NVarChar, req.body.PostSong)
+        .input("PostDate", sql.NVarChar, req.body.PostDate)
+        .input("UserName", sql.NVarChar, req.body.UserName)
+        .input("Playlist", sql.NVarChar, req.body.Playlist)
+        .query(
+          `INSERT INTO POSTS (PostDescription, PostSong, PostDate, UserName, Playlist)
           VALUES
-            ('${req.body.PostDescription}', '${req.body.PostSong}', '${req.body.PostDate}', '${req.body.UserName}', '${req.body.Playlist}')`
-      );
+            (@PostDescription, @PostSong, @PostDate, @UserName, @Playlist)`
+        );
     })
     .then(result => {
-      console.log("post posted!");
+      console.log(`${req.body.UserName} posted ${req.body.PostDescription}`);
       res.send(result);
     })
     .catch(err => {

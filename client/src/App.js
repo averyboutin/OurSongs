@@ -34,7 +34,7 @@ class App extends Component {
       isWelcoming: false,
       isSigningUp: false,
       isLoggingIn: false,
-      isViewingPosts: true,
+      isViewingPosts: false,
       isViewingComments: false,
 
       commentsData: {
@@ -68,7 +68,8 @@ class App extends Component {
               isLoggedIn: true,
               isLoggedInWithSpotify: true,
               UserName: result.display_name,
-              spotifyUserID: result.id
+              spotifyUserID: result.id,
+              isViewingPosts: true
             });
           });
       });
@@ -209,17 +210,19 @@ class App extends Component {
               >
                 Go Back
               </button>
-              <Post
-                UserName={this.state.commentsData.UserName}
-                currentUserName={this.state.UserName}
-                PostID={this.state.commentsData.PostID}
-                song={this.state.commentsData.PostSong}
-                description={this.state.commentsData.PostDescription}
-                PostDate={this.state.commentsData.PostDate}
-                Playlist={this.state.commentsData.Playlist}
-                token={this.state.token}
-                isViewingComments={this.state.isViewingComments}
-              />
+              <div className="posts-container">
+                <Post
+                  UserName={this.state.commentsData.UserName}
+                  currentUserName={this.state.UserName}
+                  PostID={this.state.commentsData.PostID}
+                  song={this.state.commentsData.PostSong}
+                  description={this.state.commentsData.PostDescription}
+                  PostDate={this.state.commentsData.PostDate}
+                  Playlist={this.state.commentsData.Playlist}
+                  token={this.state.token}
+                  isViewingComments={this.state.isViewingComments}
+                />
+              </div>
               <Comments
                 isLoggedIn={this.state.isLoggedIn}
                 isLoggedInWithSpotify={this.state.isLoggedInWithSpotify}

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./comment.scss";
 import moment from "moment";
+import * as Vibrant from "node-vibrant";
 
 class Comment extends Component {
   constructor() {
@@ -61,16 +62,28 @@ class Comment extends Component {
       : this.props.addTrackToPlaylist(this.props.CommentID, this.props.song);
   };
 
+  handleCommentClick = () => {
+    Vibrant.from(this.state.trackAlbumArtUrl)
+      .getPalette()
+      .then(palette => {
+        console.log(palette);
+        document.body.style.background = `linear-gradient(-30deg, ${palette.Vibrant.hex}, #ffffff)`;
+      });
+  };
+
   render() {
     return (
-      <div>
+      <div onClick={this.handleCommentClick}>
         <div
           className={
             this.props.IsInPlaylist ? "comment is-in-playlist" : "comment"
           }
         >
           <div className="frame" onClick={this.handleFameClick}>
-            <img src={this.state.trackAlbumArtUrl} alt="" />
+            <img
+              src={this.state.trackAlbumArtUrl}
+              alt={`album art for ${this.state.trackAlbum}`}
+            />
           </div>
           <div className="info">
             <div className="user-info">

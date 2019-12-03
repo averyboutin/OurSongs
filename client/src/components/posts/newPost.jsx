@@ -173,7 +173,7 @@ class NewPost extends Component {
     return (
       <div>
         {this.state.isMakingNew ? (
-          <form onSubmit={this.handleSubmit}>
+          <form className="new-post-form" onSubmit={this.handleSubmit}>
             <div className="form-group">
               <label className="form-text text-muted" htmlFor="PostSong">
                 Enter Spotify Track ID{" "}
