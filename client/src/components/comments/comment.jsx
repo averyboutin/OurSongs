@@ -67,7 +67,7 @@ class Comment extends Component {
       .getPalette()
       .then(palette => {
         console.log(palette);
-        document.body.style.background = `linear-gradient(-30deg, ${palette.Vibrant.hex}, #ffffff)`;
+        document.body.style.background = `linear-gradient(-30deg, ${palette.LightMuted.hex}, #ffffff)`;
       });
   };
 

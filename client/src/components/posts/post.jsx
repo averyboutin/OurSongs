@@ -57,7 +57,7 @@ class Post extends Component {
     Vibrant.from(this.state.trackAlbumArtUrl)
       .getPalette()
       .then(palette => {
-        document.body.style.background = `linear-gradient(-30deg, ${palette.Vibrant.hex}, #ffffff)`;
+        document.body.style.background = `linear-gradient(-30deg, ${palette.LightMuted.hex}, #ffffff)`;
       });
   };
 
@@ -97,48 +97,50 @@ class Post extends Component {
                 </h3>
               </div>
             </div>
-            <div className="buttons">
-              {!this.props.isViewingComments && (
-                <button
-                  className="btn btn-secondary"
-                  onClick={() =>
-                    this.props.handleViewComments({
-                      UserName: this.props.UserName,
-                      PostID: this.props.postID,
-                      PostSong: this.props.song,
-                      PostDescription: this.props.description,
-                      pageNumber: this.props.pageNumber,
-                      PostDate: this.props.PostDate,
-                      Playlist: this.props.Playlist
-                    })
-                  }
-                >
-                  View Comments ({this.props.numComments})
-                </button>
-              )}
-              {this.props.Playlist && (
-                <button
-                  className="btn btn-secondary btn-spotify"
-                  onClick={e => {
-                    window.open(
-                      `http://open.spotify.com/user/thelinmichael/playlist/${this.props.Playlist}`,
-                      "_blank"
-                    );
-                  }}
-                >
-                  Open Spotify Playlist
-                </button>
-              )}
-              {this.props.UserName === this.props.currentUserName &&
-                !this.props.isViewingComments && (
+            {(!this.props.isViewingComments || this.props.Playlist) && ( //so buttons doesn't render when in comments mode and there is not playlist button
+              <div className="buttons">
+                {!this.props.isViewingComments && (
                   <button
-                    className="btn btn-danger"
-                    onClick={this.handleDelete}
+                    className="btn btn-secondary"
+                    onClick={() =>
+                      this.props.handleViewComments({
+                        UserName: this.props.UserName,
+                        PostID: this.props.postID,
+                        PostSong: this.props.song,
+                        PostDescription: this.props.description,
+                        pageNumber: this.props.pageNumber,
+                        PostDate: this.props.PostDate,
+                        Playlist: this.props.Playlist
+                      })
+                    }
                   >
-                    DELETE
+                    View Comments ({this.props.numComments})
                   </button>
                 )}
-            </div>
+                {this.props.Playlist && (
+                  <button
+                    className="btn btn-secondary btn-spotify"
+                    onClick={e => {
+                      window.open(
+                        `http://open.spotify.com/user/thelinmichael/playlist/${this.props.Playlist}`,
+                        "_blank"
+                      );
+                    }}
+                  >
+                    Open Spotify Playlist
+                  </button>
+                )}
+                {this.props.UserName === this.props.currentUserName &&
+                  !this.props.isViewingComments && (
+                    <button
+                      className="btn btn-danger"
+                      onClick={this.handleDelete}
+                    >
+                      DELETE
+                    </button>
+                  )}
+              </div>
+            )}
           </div>
         </div>
         {this.state.displayWidget && (
